@@ -1,18 +1,26 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import { listBooks } from "./api";
 
 class App extends Component {
+  state = {
+    books: []
+  };
+
+  async componentDidMount() {
+    this.setState({
+      books: await listBooks()
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <h1>Books!</h1>
+        <ol>
+          {this.state.books.map(book => {
+            return <li key={book._id}>{book.title}</li>;
+          })}
+        </ol>
       </div>
     );
   }
